@@ -1,0 +1,15 @@
+{
+	"description": "hahades",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"appid": "wx2badd12a67dca5f9",
+	"projectname": "haha",
+	"miniprogramRoot": "./dist",
+	"condition": {}
+}

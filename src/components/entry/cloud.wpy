@@ -1,0 +1,31 @@
+<style lang="less">
+  .cloud {
+    position: absolute;
+    // z-index: 0;
+    image {
+      width: 124rpx;
+    }
+  }
+</style>
+<template>
+  <view class="cloud" style="left: {{itemData.px}}rpx; top: {{itemData.py}}rpx;" animation="{{itemData.animationData}}" @tap="tap">
+    <image mode="widthFix" src="../../images/entry/ic_cloud.png"></image>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class Cloud extends wepy.component {
+
+    props = {
+      itemData: {
+        type: [Object],
+        default: {px: 0, py: 0, animationData: {}}
+      }
+    }
+
+    data = {
+      animationData: {}
+    }
+  }
+</script>

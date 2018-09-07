@@ -1,0 +1,30 @@
+<style lang="less">
+  
+  .like{
+    float: right;
+    image{
+      width: 36rpx;
+      vertical-align: middle;
+    }
+    text{
+      font-size: 20rpx;
+      color: #9EA4AE;
+      letter-spacing: 0;
+      margin-left:18rpx;
+      vertical-align: middle;
+    }
+  }
+     
+</style>
+<template> 
+  <view class="like">
+    <image mode="widthFix" src="../images/topic/like.png"></image>
+    <text>435</text>
+  </view>    
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class Like extends wepy.component {
+  }
+</script>

@@ -1,0 +1,114 @@
+<style lang="less">
+  .topic{
+    button{
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+    button:after{
+      border: none;
+    }
+    .head {
+      height: 310rpx;
+      background: #835BD5;
+      position: relative;
+      .activity{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 99;
+        image{
+          width: 100%;
+          height: auto;
+        }
+        .participant{
+          font-size: 24rpx;
+          color: #9EA4AE;
+          letter-spacing: 0;
+          line-height: 20rpx;
+          position: absolute;
+          top: 160rpx;
+          left: 90rpx;
+        }
+        .challenge{        
+          position: absolute;
+          left: 125rpx;
+          bottom: 110rpx;
+          image{
+            width: 500rpx;
+            height: 100rpx;
+          }
+        }
+      }
+    }
+    .content{
+      background-color: #fbfbfb;
+      padding-top: 305rpx;
+    }
+  }
+      
+</style>
+
+<template>
+  <view class="topic">
+    <view class="head">
+      <view class="activity">
+        <image mode="widthFix" src="../images/topic/activity.png"></image>
+        <text class="participant">273754 人参与</text>
+        <button class="challenge">
+          <image wx:if="{{ buttonType == 'invite' }}" mode="widthFix" src="../images/topic/invite.png"></image>
+          <image wx:if="{{ buttonType == 'start' }}" mode="widthFix" src="../images/topic/start.png"></image>
+          <image wx:if="{{ buttonType == 'done' }}" mode="widthFix" src="../images/topic/challengedone.png"></image>
+        </button>
+      </view>            
+    </view>
+    <view class="content">
+      <winperson></winperson>
+      <myChallenge types="group"></myChallenge>
+      <challengeCom></challengeCom>
+    </view>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Winperson from '../components/topic/winperson'
+  import ChallengeCom from '../components/topic/challengeComplete'
+  import MyChallenge from '../components/topic/myChallenge'
+
+  export default class Topic extends wepy.page {
+    config = {
+      navigationBarTitleText: '话题挑战赛',
+      navigationBarBackgroundColor: '#835BD5',
+      enablePullDownRefresh: true,
+      onReachBottomDistance: 10
+    }
+
+    props = {
+      buttonType: {
+        type: String,
+        default: 'start'
+      }
+    }
+
+    components = {
+      winperson: Winperson,
+      challengeCom: ChallengeCom,
+      myChallenge: MyChallenge
+    }
+
+    data = {
+      a: 3
+    }
+
+    onPullDownRefresh() {
+      wepy.stopPullDownRefresh()
+      console.log('23')
+    }
+
+    onReachBottom() {
+      console.log('xiala')
+    }
+  }
+</script>

@@ -1,0 +1,263 @@
+<style lang="less">
+  .entry {
+    background-image: linear-gradient(-180deg, #A1F5DD 0%, #C9EAA1 50%, #AFDFA6 100%);
+    position: relative;
+    overflow: hidden;
+
+    .header {
+      z-index: 2;
+      position: relative;
+      height: 600rpx;
+
+      .headImage {
+        margin-top: 50rpx;
+        width: 100%;
+      }
+
+      .times {
+        position: absolute;
+        left: 300rpx;
+        top: 63rpx;
+        font-size: 32rpx;
+        color: #120F00;
+        letter-spacing: 0;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      .lightImage {
+        position: absolute;
+        left: 50rpx;
+        top: 240rpx;
+        width: 650rpx;
+
+        &.hide {
+          display: none;
+        }
+      }
+    }
+
+    .topPiece {
+      width: 750rpx;
+    }
+
+    .bottomView {
+      position: relative;
+      height: 485rpx;
+
+      .houseImage {
+        position: absolute;
+        width: 100%;
+        margin-top: -33rpx;
+        z-index: 3;
+      }
+
+      .barImage {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      }
+
+      .fight, .wallet {
+        position: absolute;
+
+        bottom: 14rpx;
+        z-index: 3;
+        image {
+          width: 136rpx;
+        }
+      }
+
+      .fight {
+        left: 212rpx;
+      }
+
+      .wallet {
+        left: 404rpx;
+      }
+    }
+  }
+</style>
+
+<template>
+  <view class="entry">
+    <view class="header">
+      <image class="headImage" mode="widthFix" src="../images/entry/ic_header.png"></image>
+      <text class="times">倒计时  23:13:17</text>
+      <image class="lightImage" mode="widthFix" src="{{lights1[lightIndex1]}}"></image>
+      <image class="lightImage" mode="widthFix" src="{{lights2[lightIndex2]}}"></image>
+      <image class="lightImage hide" mode="widthFix" src="{{lights1[1]}}"></image>
+      <image class="lightImage hide" mode="widthFix" src="{{lights2[1]}}"></image>
+    </view>
+    <image class="topPiece" mode="widthFix" src="../images/entry/ic_topPiece.png"></image>
+    <block wx:for-items="{{list}}" wx:for-index="index" wx:for-item="item" wx:key="id">
+      <panel>
+      </panel>
+    </block>
+    <view class="bottomView">
+      <image class="houseImage" mode="widthFix" src="../images/entry/ic_house.png"></image>
+      <image class="barImage" mode="widthFix" src="../images/entry/ic_bottomBar.png"></image>
+      <view class="fight">
+        <image mode="widthFix" src="../images/entry/ic_fight.png"></image>
+      </view>
+      <view class="wallet">
+        <image mode="widthFix" src="../images/entry/ic_wallet.png"></image>
+      </view>
+    </view>
+    <repeat for="{{clouds}}" item="item">
+      <cloud :itemData="item"/>
+    </repeat>
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Panel from '@/components/entry/panel'
+  import Cloud from '@/components/entry/cloud'
+
+  const CloudDuration = 7000
+
+  export default class Entry extends wepy.page {
+    config = {
+      navigationBarTitleText: 'UP帮帮'
+    }
+
+    components = {
+      panel: Panel,
+      cloud: Cloud
+    }
+
+    data = {
+      ps1: {px: 200, py: 200},
+      ps2: {px: 100, py: 100},
+      clouds: [
+      ],
+      list: [
+        {
+          id: '0',
+          title: 'loading'
+        },
+        {
+          id: '0',
+          title: 'loading'
+        },
+        {
+          id: '0',
+          title: 'loading'
+        }
+      ],
+      lights1: [
+        '../images/entry/ic_light_1.png',
+        '../images/entry/ic_light_3.png'
+      ],
+      lights2: [
+        '../images/entry/ic_light_2.png',
+        '../images/entry/ic_light_4.png'
+      ],
+      lightIndex1: 0,
+      lightIndex2: 0
+    }
+
+    onLoad() {
+      this.animation = wepy.createAnimation({
+        duration: CloudDuration
+      })
+    }
+
+    onShow() {
+      this.addClouds()
+
+      this.lightTimer = setInterval(this.excLightAnimation, 1000)
+
+      setTimeout(() => {
+        this.excCloudAnimations()
+        this.cloudTimer = setInterval(this.excCloudAnimations, CloudDuration)
+      }, 100)
+    }
+
+    onHide() {
+      if (this.lightTimer) {
+        clearInterval(this.lightTimer)
+        this.lightTimer = null
+      }
+
+      if (this.cloudTimer) {
+        clearInterval(this.cloudTimer)
+        this.cloudTimer = null
+      }
+    }
+
+    // 添加云朵
+    addClouds = () => {
+      let self = this
+
+      let query = wepy.createSelectorQuery()
+      query.select('.entry').boundingClientRect()
+      query.exec(function (res) {
+        let clouds = []
+        let j = 0
+        for (let i = 0; i < res[0].height; i = i + 100) {
+          clouds.push({
+            px: j % 2 !== 0 ? -60 : 375 * 2 - 60,
+            py: i * 2 - 40
+          })
+          j++
+        }
+
+        clouds.pop()
+        clouds.pop()
+        clouds.pop()
+        clouds.pop()
+
+        self.clouds = clouds
+        self.$apply()
+      })
+    }
+
+    // 执行广告灯的动画
+    excLightAnimation = () => {
+      ++this.lightIndex1
+      ++this.lightIndex2
+      if (this.lightIndex1 > 1) {
+        this.lightIndex1 = 0
+        this.lightIndex2 = 0
+      }
+
+      this.$apply()
+    }
+
+    // 执行云朵的动画
+    excCloudAnimations = () => {
+      let clouds = []
+
+      for (let i = 0; i < this.clouds.length; i++) {
+        let d = {...this.clouds[i]}
+
+        // 保证下次动画一定是上次的反方向
+        let random = d.random
+
+        if (d.random === undefined) {
+          random = Math.random() * 100 - 50
+        } else if (d.random > 0) {
+          random = 0 - Math.random() * 100
+        } else {
+          random = Math.random() * 100
+        }
+
+        if (random < 0) {
+          random -= 20
+        } else {
+          random += 20
+        }
+
+        this.animation.translate(random, 0).step()
+        d.animationData = this.animation.export()
+        d.random = random
+
+        clouds.push(d)
+      }
+
+      this.clouds = clouds
+    }
+  }
+</script>

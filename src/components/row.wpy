@@ -1,0 +1,122 @@
+<style lang="less">
+  .row{
+    background: #FFFFFF;
+    border-radius: 20rpx;
+    padding-top:30rpx;
+    padding-bottom: 56rpx;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+    width: 100%;
+    box-sizing: border-box;
+    color: #3F4852;
+    text{
+      word-break:break-all;
+      white-space:pre-wrap;
+      text-align: justify;
+      word-wrap:break-word;
+    }
+    .commander{
+      .leftc{
+        padding-right:28rpx;
+        image{
+          width: 90rpx;
+          height: 90rpx;
+          background: #D8D8D8;
+          border-radius: 10rpx;
+        }
+      }
+      .rightc{
+        .user{
+          line-height: 40rpx;
+          margin-bottom: 14rpx;
+          .username{
+            font-size: 28rpx;
+            color: #747E8B;
+            letter-spacing: 0;
+          }
+        }
+        .comment{
+          font-size: 32rpx;
+          letter-spacing: 0;
+        }
+        .space{
+          height: 2rpx;
+          background: #F0F0F9;
+          margin-top: 30rpx;
+        }
+      }
+    }
+    .member{
+      padding-left: 30rpx;
+      .detail{
+        margin-top: 30rpx;
+        .user{
+          width: 60rpx;
+          height: 60rpx;
+          background: #D8D8D8;
+          border-radius: 10rpx;
+          margin-right: 28rpx;
+        }
+        .comment{
+          font-size: 28rpx;
+          letter-spacing: 0;
+          line-height: 40rpx;
+          padding-top: 10rpx;
+        }
+      }
+    }
+  }
+  
+</style>
+<template>
+  <view class="row">
+    <view class="commander flex">
+      <view class="leftc">
+        <image></image>
+      </view>
+      <view class="flex-item rightc">
+        <view class="user">
+          <text class="username">楠楠 . MS</text>
+          <like wx:if="{{areas != 'my'}}"></like>
+        </view>
+        <view class="comment">
+          <text>这里春红已谢，没有赏花的人群，也没有蜂围蝶阵。有的就是这一树闪光的盛开的藤萝闹！</text>
+        </view>
+        <view class="space" wx:if="{{types == 'group'}}"></view>
+      </view>
+    </view>
+    <view class="member" wx:if="{{types == 'group'}}">
+      <repeat for="{{datas}}" item="item" index="index" key="key">
+        <view class="detail flex">
+          <image class="user"></image>
+          <view class="flex-item comment">
+            <text>泛着点点银光，就像迸溅的水花仔细看时才还有淡淡的芳香。</text>
+          </view>
+        </view>
+      </repeat>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import Like from '../components/like'
+
+  export default class Row extends wepy.component {
+    props = {
+      areas: {
+        type: String
+      },
+      types: {
+        type: String
+      },
+      datas: {
+        type: Object,
+        default: [1, 2, 3]
+      }
+    }
+
+    components = {
+      like: Like
+    }
+  }
+</script>

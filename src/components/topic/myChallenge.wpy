@@ -1,0 +1,112 @@
+<style lang="less">
+  .myChallenge{
+    background: #fff;
+    .space{
+      height: 44rpx;
+      background: #fbfbfb;
+      margin-bottom: 36rpx;
+    }
+    .my{
+      font-size: 28rpx;
+      color: #3F4852;
+      letter-spacing: 0;
+      text-align: justify;
+      line-height: 28rpx;
+      padding: 0 40rpx;
+      .right{
+        float: right;
+        color: #FF7098;
+      }
+    }
+    .scroll{
+      width: 100%;  
+      transition: all 1s;
+      &.max{
+        max-height: 530rpx;
+        overflow: hidden;
+      }
+    }
+    .extend{
+      padding-top: 30rpx;
+      padding-bottom: 56rpx;
+      &.hidden{
+        display: none;
+      }
+      text{
+        display: block;
+        font-size: 24rpx;
+        color: #9EA4AE;
+        letter-spacing: 0;
+        text-align: center;
+        line-height: 40rpx;
+      }
+    }
+  }
+  
+</style>
+<template>
+  <view class="myChallenge">
+    <view class="space"></view>
+    <view class="my">
+      <text wx:if="{{types == 'single'}}">我的回复</text>
+      <text wx:if="{{types == 'group'}}">我的战队</text>
+      <like></like>
+      <!-- <text class="right">差2人完成</text> -->
+    </view>
+    <view class="scroll" :class="{ max: (isHidden && !isExtend) }" >
+      <view id="scroll-area">
+        <row areas="my" types="group" ></row>
+      </view>
+    </view>
+    <view class="extend" :class="{ hidden: !isHidden }" @tap="extend">
+      <text wx:if="{{!isExtend}}">展开全部</text>
+      <text wx:if="{{isExtend}}">收起信息</text>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import Row from '../row'
+  import Like from '../like'
+
+  export default class MyChallenge extends wepy.component {
+    props = {
+      types: {
+        type: String
+      }
+    }
+
+    data = {
+      isExtend: false,
+      isHidden: false,
+      height: 0
+    }
+
+    components = {
+      row: Row,
+      like: Like
+    }
+
+    methods = {
+      extend () {
+        this.isExtend = !this.isExtend
+      }
+    }
+
+    onLoad() {
+      let query = wepy.createSelectorQuery()
+      let height
+      let self = this
+      query.select('#scroll-area').boundingClientRect()
+      query.exec(function (res) {
+        height = res[0].height
+        console.log(height)
+        self.height = height
+        if (height > 295) {
+          self.isHidden = true
+        }
+        self.$apply()
+      })
+    }
+  }
+</script>

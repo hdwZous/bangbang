@@ -1,0 +1,67 @@
+<style lang="less">
+  .win-person{
+    height: 60rpx;
+    padding-left: 40rpx;
+    padding-right: 40rpx;
+    .left{
+      line-height: 60rpx;
+      color:#000000;
+      font-size:28rpx;
+      .space{
+        width: 2rpx;
+        height:23rpx;
+        display: inline-block;
+        background: #D8D8D8;
+        margin:0 12rpx;
+      }
+      .winner{
+        color: #9EA4AE;
+      }
+    }
+    .right{
+      image{
+        width: 60rpx;
+        height: 60rpx;
+        background: #D8D8D8;
+        border-radius: 10rpx;
+      }
+      text{
+        display: inline-block;
+        width: 9rpx;
+        height: 60rpx;
+      }
+    }
+  }
+  
+</style>
+<template>
+  <view class="win-person flex flex-row">
+    <view class="flex-item left">
+      <text>中奖人员</text>
+      <text class="space"></text>
+      <text class="winner">{{winner}}人</text>
+    </view>
+    <view class="flex-item right">
+      <repeat for="{{list}}" item="item" index="index" key="key">
+        <image mode="widthFix"></image>
+        <text wx:if="{{index != list.length-1 }}"></text>
+      </repeat>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class Winperson extends wepy.component {
+    props = {
+      winner:{
+        type: Number,
+        default: 10000
+      },
+      list:{
+        type: Object,
+        default: [1,2,3,4,5]
+      }
+    }
+  }
+</script>

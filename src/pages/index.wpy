@@ -1,0 +1,32 @@
+<style lang="less">
+
+</style>
+<template>
+  <view class="container">
+
+    <panel>
+      <text class="testcounter">计数组2222件122222: </text>
+
+      <view class="counterview">
+        <counter2 :num.sync="mynum"></counter2>
+      </view>
+    </panel>
+
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import Panel from '@/components/panel' // alias example
+  import Counter from 'counter' // alias example
+
+  export default class Index extends wepy.page {
+    config = {
+      navigationBarTitleText: 'test99 2'
+    }
+    components = {
+      panel: Panel,
+      counter2: Counter
+    }
+  }
+</script>

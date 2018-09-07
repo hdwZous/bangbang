@@ -1,0 +1,42 @@
+<style lang="less">
+  .challengeCom{
+    .top{
+      padding-top: 44rpx;
+      image{
+        width: 100%;
+      }
+    }
+  }
+  
+</style>
+<template>
+  <view class="challengeCom">
+    <view class="top">
+      <image mode="widthFix" src="../../images/topic/challengeCom.png"></image>
+    </view>
+    <view>
+      <repeat for="{{lists}}" item="item" index="index" key="key">
+        <row areas="challenge" types="group"></row>
+        <view style="height:16rpx"></view>
+      </repeat>
+    </view>
+    <view style="height:40rpx;background:#fff;"></view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import Row from '../row'
+
+  export default class ChallengeCom extends wepy.component {
+    props = {
+      lists: {
+        type: Object,
+        default: [1, 2, 3]
+      }
+    }
+
+    components = {
+      row: Row
+    }
+  }
+</script>

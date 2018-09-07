@@ -1,0 +1,9 @@
+diff a/src/app.wpy b/src/app.wpy	(rejected hunks)
+@@ -26,6 +26,7 @@
+   config = {
+     pages: [
+       'pages/entry',
++      'pages/topic',
+       'pages/index'
+     ],
+     window: {

@@ -1,0 +1,84 @@
+<style lang="less">
+  .panel {
+    position: relative;
+
+    .bg {
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    .piece, .btns {
+      position: absolute;
+      left: 0;
+      right: 0;
+      z-index: 2;
+    }
+
+    .piece {
+      bottom: 0rpx;
+      width: 100%;
+    }
+
+    .btns {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      bottom: 25rpx;
+      padding: 0 65rpx;
+
+      .tags {
+        display: flex;
+        align-items: center;
+
+        .tag {
+          width: 120rpx;
+        }
+
+        text {
+          margin-left: 5rpx;
+          font-family: DINPro-Bold;
+          font-size: 36rpx;
+          color: #FFFFFF;
+          letter-spacing: 0;
+          text-shadow: 0 2px 4px rgba(43,0,0,0.51);
+        }
+      }
+
+
+      .btn {
+        width: 190rpx;
+      }
+    }
+
+    .content {
+      position: absolute;
+      top: -50rpx;
+      left: 0;
+      right: 0;
+      width: 100%;
+      z-index: 1;
+    }
+  }
+</style>
+<template>
+  <view class="panel">
+    <image class="bg" mode="widthFix" src="../../images/entry/ic_panelBg.png"></image>
+    <image class="piece" mode="widthFix" src="../../images/entry/ic_piece.png"></image>
+    <image class="content" mode="widthFix" src="../../images/entry/ic_test.png"></image>
+    <view class="btns">
+      <view class="tags">
+        <image class="tag" mode="widthFix" src="../../images/entry/ic_join.png"></image>
+        <text>1,207</text>
+      </view>
+      <image class="btn" mode="widthFix" src="../../images/entry/ic_btn_gofight.png"></image>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class Panel extends wepy.component {
+  }
+</script>
